@@ -7,6 +7,7 @@ import Videos from './components/Videos/Videos';
 import NotFound from './components/NotFound/NotFound';
 import { createContext, useState } from 'react';
 import BlogDetails from './components/BlogDetails/BlogDetails';
+import Signup from './components/Signup/Signup';
 
 export const BlogContext = createContext();
 
@@ -20,6 +21,7 @@ function App() {
       <Route path = '/login' element = {<Login></Login>}></Route>
       <Route path = '/videos' element = {<Videos></Videos>}></Route>
       <Route path = '/blog/:id' element = {<BlogDetails></BlogDetails>}></Route>
+      <Route path = '/signup' element={<Signup></Signup>}></Route>
       <Route path = '*' element = {<NotFound></NotFound>}></Route>
     </Routes>
     </BlogContext.Provider>
