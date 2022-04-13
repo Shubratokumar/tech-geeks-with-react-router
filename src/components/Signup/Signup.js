@@ -1,14 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoogleLogo from "../../Assets/Image/google.svg";
 import FacebookLogo from "../../Assets/Image/Facebook.svg";
 import GitHubLogo from "../../Assets/Image/Github.svg";
-import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from './../../firebase.init';
 import toast from "react-hot-toast";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleEmailBlur = (event) =>{
+    if(/\S+@\S+\.\S+/.test(event.target.value)){
+      setEmail(event.target.value); 
+      return; 
+    } 
+    
+  }
+  const handlePasswordBlur = (event) =>{
+    if(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(event.target.value)){
+      setPassword(event.target.value);
+      return;
+    }
+  }
+  const handleConfirmPasswordBlur = (event) =>{
+    setConfirmPassword(event.target.value);
+  }
+ 
+  const handleFormSubmit = (event) =>{
+    event.preventDefault();
+    if(email && password && confirmPassword === password){
+      createUserWithEmailAndPassword(auth, email, password)
+      .then((result) =>{
+        const user = result.user;
+        toast.success("Welcome!!! Successfully Signed up.")
+        navigate("/")
+        console.log(user)
+      })
+      .catch((error) =>{
+        toast.error("Opps!!! An error happend.")
+        console.error(error)
+      })
+    }
+  }
 
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
@@ -19,7 +56,7 @@ const Signup = () => {
     .then((result) =>{
       const user = result.user;
       navigate("/");
-      toast.success("Welcome!!! Successfully Signed Up.")
+      toast.success("Welcome!!! Successfully Signed in with Google.")
       console.log(user);
     })
     .catch(error =>{
@@ -33,7 +70,7 @@ const Signup = () => {
     .then((result) =>{
       const user = result.user;
       navigate("/")
-      toast.success("Welcome!!! Successfully Logged In with Facebook.")
+      toast.success("Welcome!!! Successfully Signed In with Facebook.")
       console.log(user);
     })
     .catch((error) =>{
@@ -47,39 +84,41 @@ const Signup = () => {
     .then((result) =>{
       const user = result.user;
       navigate("/");
-      toast.success("Welcome!!! Successfully Logged In with GitHub.")
+      toast.success("Welcome!!! Successfully Signed In with GitHub.")
       console.log(user);
     })
     .catch((error) =>{
       toast.error("Opps!!! An error happend.")
       console.error(error)
-    })
-  
+    })  
   }
+
   return (
     <div className='auth-form-container '>
       <div className='auth-form'>
         <h1>Sign Up</h1>
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <div className='input-field'>
             <label htmlFor='email'>Email</label>
             <div className='input-wrapper'>
-              <input type='email' name='email' id='email' />
+              <input onBlur={handleEmailBlur} type='email' name='email' id='email' required/>
             </div>
           </div>
           <div className='input-field'>
             <label htmlFor='password'>Password</label>
             <div className='input-wrapper'>
-              <input type='password' name='password' id='password' />
+              <input onBlur={handlePasswordBlur} type='password' name='password' id='password' required/>
             </div>
           </div>
           <div className='input-field'>
             <label htmlFor='confirm-password'>Confirm Password</label>
             <div className='input-wrapper'>
               <input
+                onBlur={handleConfirmPasswordBlur}
                 type='password'
                 name='confirmPassword'
                 id='confirm-password'
+                required
               />
             </div>
           </div>

@@ -67,9 +67,9 @@ const Navbar = () => {
           
           <NavLink
             className={({ isActive }) => (isActive ? "active-link" : "link")}
-            to="login"
+            to=""
           >
-            {user?.displayName ? user?.displayName : " "}
+            {user?.displayName ? user?.displayName : ""}
           </NavLink>
           <NavLink onClick={handleSignOut}
             className={({ isActive }) => (isActive ? "active-link" : "link")}

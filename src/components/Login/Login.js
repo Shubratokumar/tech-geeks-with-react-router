@@ -57,21 +57,25 @@ const Login = () => {
     })
   }
 
+  const handleFormSubmit = (event) =>{
+    event.preventDefault();
+  }
+
   return (
     <div className='auth-form-container '>
       <div className='auth-form'>
         <h1>Login</h1>
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <div className='input-field'>
             <label htmlFor='email'>Email</label>
             <div className='input-wrapper'>
-              <input type='text' name='email' id='email' />
+              <input type='text' name='email' id='email' required/>
             </div>
           </div>
           <div className='input-field'>
             <label htmlFor='password'>Password</label>
             <div className='input-wrapper'>
-              <input type='password' name='password' id='password' />
+              <input type='password' name='password' id='password' required/>
             </div>
           </div>
           <button type='submit' className='auth-form-submit'>

@@ -65,6 +65,7 @@
   border: none;
   background-color: #fff;
   outline: none;
+  padding-left: 8px;
 }
 
 .auth-form-submit {
