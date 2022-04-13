@@ -2,9 +2,28 @@ import React from "react";
 import "./AuthForm.css";
 import GoogleLogo from "../../Assets/Image/google.svg";
 import { useNavigate } from "react-router-dom";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import auth from './../../firebase.init';
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const googleProvider = new GoogleAuthProvider();
+
+  const handleGoogleSignIn = () =>{
+    signInWithPopup(auth, googleProvider)
+    .then((result) =>{
+      const user = result.user;
+      navigate('/');
+      toast.success("Welcome!!! Successfully Logged In.")
+      console.log(user);
+    })
+    .catch(error =>{
+      toast.error("Opps!!! An error happend.")
+      console.error(error);
+    })
+  }
 
   return (
     <div className='auth-form-container '>
@@ -37,7 +56,7 @@ const Login = () => {
           <div className='line-right' />
         </div>
         <div className='input-wrapper'>
-          <button className='google-auth'>
+          <button onClick={handleGoogleSignIn} className='google-auth'>
             <img src={GoogleLogo} alt='' />
             <p> Continue with Google </p>
           </button>
