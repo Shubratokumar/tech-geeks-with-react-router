@@ -13,7 +13,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 8px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.411);
   padding-bottom: 50px;
 }
 
@@ -37,6 +37,7 @@
 
 .input-wrapper {
   padding: 2px;
+  margin-bottom: 10px;
   border-radius: 7px;
   background: #1b4388;
   background: linear-gradient(
@@ -46,6 +47,16 @@
   );
 }
 
+.google-auth:hover{  
+  color: whitesmoke;
+  transition: color ease-in-out 0.3s;
+  background: #3780fd;
+  background: linear-gradient(
+    25deg,
+    rgb(9, 44, 105) 0%,
+    rgb(27, 133, 179) 100%
+  );
+}
 .input-field input {
   width: 415px;
   height: 55px;
